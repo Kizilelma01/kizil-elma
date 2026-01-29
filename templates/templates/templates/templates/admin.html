@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Kızıl Elma | Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>body { background-color: #0d1117; color: #c9d1d9; } .card-admin { background: #161b22; border: 1px solid #30363d; padding: 20px; border-radius: 12px; margin-bottom: 20px; }</style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark border-bottom border-secondary mb-4"><div class="container"><span class="navbar-brand text-danger fw-bold">KIZIL ELMA YÖNETİM</span><a href="/" class="btn btn-outline-info btn-sm">Panele Dön</a></div></nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card-admin">
+                <h5 class="text-info">Yeni Kullanıcı</h5>
+                <form action="/admin/user/add" method="POST">
+                    <input type="text" name="fullname" class="form-control mb-2 bg-dark text-white" placeholder="Ad Soyad" required>
+                    <input type="text" name="anahtar" class="form-control mb-2 bg-dark text-white" placeholder="Anahtar" required>
+                    <input type="date" name="bitis_tarihi" class="form-control mb-3 bg-dark text-white" required>
+                    <button class="btn btn-info w-100">Ekle</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-admin">
+                <h5 class="text-success">Üyeler (IP Kilitli)</h5>
+                <table class="table table-dark table-hover small">
+                    <thead><tr><th>Ad Soyad</th><th>Anahtar</th><th>IP</th><th>İşlem</th></tr></thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td>{{ u.fullname }}</td>
+                            <td><code>{{ u.anahtar }}</code></td>
+                            <td>{{ u.ip_address if u.ip_address else 'Boş' }}</td>
+                            <td>
+                                <a href="/admin/user/reset_ip/{{ u.id }}" class="btn btn-warning btn-sm py-0">Sıfırla</a>
+                                <a href="/admin/user/delete/{{ u.id }}" class="text-danger ms-2"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card-admin">
+                <h5 class="text-warning">Tüm İşlem Logları (Sorgular Dahil)</h5>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm table-dark small">
+                        <thead><tr><th>Kullanıcı</th><th>Eylem</th><th>Detay</th><th>Zaman</th></tr></thead>
+                        <tbody>
+                            {% for l in logs %}
+                            <tr><td>{{ l.fullname }}</td><td><span class="badge bg-secondary">{{ l.action }}</span></td><td>{{ l.detail }}</td><td>{{ l.timestamp }}</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
