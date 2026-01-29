@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Kızıl Elma | Profilim</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f1216; color: #c9d1d9; font-family: 'Segoe UI', sans-serif; }
+        .profile-card { background: #161b22; border: 1px solid #30363d; border-radius: 20px; padding: 40px; margin-top: 30px; }
+        .stat-box { background: #1c2128; border: 1px solid #30363d; border-radius: 15px; padding: 25px; text-align: center; }
+        .progress { height: 12px; background-color: #30363d; border-radius: 6px; margin-top: 20px; }
+        .progress-bar { background-color: #ff4d4d; transition: 1s ease-in-out; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark border-bottom border-secondary mb-4">
+    <div class="container">
+        <a class="navbar-brand text-danger fw-bold" href="/"><i class="fas fa-apple-alt me-2"></i>KIZIL ELMA</a>
+        <a href="/" class="btn btn-outline-secondary btn-sm">Panele Dön</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="profile-card shadow-lg border-0">
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-2 text-center">
+                        <i class="fas fa-user-shield fa-5x text-info"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <h2 class="fw-bold mb-1">Sayın {{ user.fullname }}</h2>
+                        <p class="text-muted mb-0">Üyelik Durumu: <span class="badge bg-danger">Tam Yetkili</span></p>
+                        <p class="small text-muted italic">Kayıtlı Cihaz IP: <code>{{ user.ip_address if user.ip_address else 'Tanımlanıyor...' }}</code></p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="stat-box">
+                            <i class="fas fa-database fa-2x text-warning mb-3"></i>
+                            <div class="text-uppercase small text-muted mb-1">Toplam İşlem</div>
+                            <div class="fs-2 fw-bold">{{ total_queries }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-box">
+                            <i class="fas fa-hourglass-half fa-2x text-danger mb-3"></i>
+                            <div class="text-uppercase small text-muted mb-1">Kalan Gün</div>
+                            <div class="fs-2 fw-bold text-danger">{{ kalan }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-box">
+                            <i class="fas fa-history fa-2x text-success mb-3"></i>
+                            <div class="text-uppercase small text-muted mb-1">Son Giriş</div>
+                            <div class="small fw-bold mt-2">{{ last_login['timestamp'] if last_login else 'Bugün' }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-4 border-top border-secondary">
+                    <div class="d-flex justify-content-between small mb-2">
+                        <span class="fw-bold">Abonelik Süreci</span>
+                        <span class="text-muted">Bitiş: {{ user.bitis_tarihi }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
